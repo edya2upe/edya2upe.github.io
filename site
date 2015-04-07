@@ -11,6 +11,7 @@ def modified_at(path):
 
 
 def build():
+    print("building site...")
     data = { 'news': [], 'files': [] }
     
     for path in glob.glob('./_site/files/*'):
@@ -28,15 +29,31 @@ def build():
     out = bytes(tpl.render(data), 'utf-8')
     
     open('./index.html', 'wb').write(out)
-
+    print("Done!")
+    
+def clean():
+    print("cleaning index.html and public/files/*")
+    
+    os.remove('./index.html')
+    for f in glob.glob('./public/files/*'):
+        os.remove(f)
+    print("Done!")
 
 def publish():
-    print('publishing...')
-
-
+    print('Cleaning...')
+    clean()
+    print('Building...')
+    build()
+    print('Commiting new changes')
+    os.system('git add -A')
+    os.system('git commit -m"publishing..."')
+    os.system('git push origin master')
+    print('Done!')
+    
 # CLI interface
 commands = {
     'build': build,
+    'clean': clean,
     'publish': publish
 }
 
