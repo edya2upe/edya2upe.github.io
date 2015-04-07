@@ -38,21 +38,11 @@ def clean():
     for f in glob.glob('./public/files/*'):
         os.remove(f)
     print("Done!")
-
-def publish():
-    clean()
-    build()
-    print('Commiting new changes')
-    os.system('git add -A')
-    os.system('git commit -m"publishing..."')
-    os.system('git push origin master')
-    print('Done!')
     
 # CLI interface
 commands = {
     'build': build,
     'clean': clean,
-    'publish': publish
 }
 
 commands[sys.argv[1]]()
