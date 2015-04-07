@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+import sys
+import glob
+import datetime
+import os
+import shutil
+from quik import FileLoader
+
+def modified_at(path):
+    return datetime.datetime.fromtimestamp(os.path.getmtime(path))
+
+
+def build():
+    data = { 'news': [], 'files': [] }
+    
+    for path in glob.glob('./_site/files/*'):
+        f = path.replace('./_site/files/', '').split('_')
+        shutil.copy(path, './public/files/')
+        data['files'].append({ 'url': path.replace('./_site', './public'), 'category': f[0] , 'basename': f[1], 'date': modified_at(path) })
+        
+    for path in glob.glob('./_site/news/*'):
+        data['news'].append({ 'date': modified_at(path) , 'body': open(path, 'r').read() })
+            
+    data['files'].sort(key = lambda k: k['date'])
+    data['news'].sort(key = lambda k: k['date'], reverse = True)
+
+    tpl = FileLoader('./_site').load_template('layout.html')
+    out = bytes(tpl.render(data), 'utf-8')
+    
+    open('./index.html', 'wb').write(out)
+
+
+def publish():
+    print('publishing...')
+
+
+# CLI interface
+commands = {
+    'build': build,
+    'publish': publish
+}
+
+commands[sys.argv[1]]()
