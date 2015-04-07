@@ -40,9 +40,7 @@ def clean():
     print("Done!")
 
 def publish():
-    print('Cleaning...')
     clean()
-    print('Building...')
     build()
     print('Commiting new changes')
     os.system('git add -A')
