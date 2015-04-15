@@ -32,9 +32,8 @@
 	</div>
 	<div class="navbar-collapse collapse">
 	  <ul class="nav navbar-nav" data-0="margin-top:20px;" data-300="margin-top:5px;">
-            <li><a href="#section-news">Novedades</a></li>
-	    <li><a href="#section-group">Comunicación</a></li>
             <li><a href="#section-files">Archivos</a></li>
+            <li><a href="#section-group">Comunicación</a></li>
 	  </ul>
 	</div><!--/.navbar-collapse -->
       </div>
@@ -56,32 +55,6 @@
       </div>
     </section>
     
-    <!-- news -->
-    <section id="section-news" class="section pad-bot30 bg-white">
-      <div class="container"> 
-	
-	<div class="row mar-bot40">
-	  <div class="col-md-offset-3 col-md-6">
-	    <div class="section-header">
-	      <h2 class="section-heading animated" data-animation="bounceInUp">Novedades</h2>
-	      <p> Anuncios, noticias, etc... </p>
-	    </div>
-	  </div>
-	</div>
-
-        #for @new in @news:
-	<div class="row mar-bot40">
-	  <div class="col-lg-12">
-	    <div class="align-center">
-              @new.body
-	    </div>
-            <span class="pull-right"> Publicado el:  @new.date.strftime('%d/%m/%Y') </span>
-	  </div>
-	  #end
-        </div>
-      </div>
-    </section>
-        
     <!-- section files -->
     <section id="section-files" class="section appear clearfix">
       <div class="container">
