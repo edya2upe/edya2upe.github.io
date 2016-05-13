@@ -11,17 +11,16 @@ def modified_at(path):
 
 def build():
     print("building site...")
-    data = { 'news': [], 'files': [] }
+    data = { 'files': [] }
     
     for path in glob.glob('./public/files/*'):
         f = path.replace('./public/files/', '').split('_')
         data['files'].append({ 'url': path, 'category': f[0] , 'basename': f[1], 'date': modified_at(path) })
         
     data['files'].sort(key = lambda k: k['date'])
-    data['news'].sort(key = lambda k: k['date'], reverse = True)
 
     tpl = FileLoader('./_site').load_template('layout.html')
-    out = bytes(tpl.render(data), 'utf-8')
+    out = tpl.render(data)
     
     os.remove('./index.html')
     open('./index.html', 'wb').write(out)
